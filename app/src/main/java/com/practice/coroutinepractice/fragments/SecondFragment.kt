@@ -57,7 +57,16 @@ class SecondFragment : Fragment() {
 
         vm.getData()
         vm.mutableLiveDataResponse.observe(viewLifecycleOwner, Observer{
-            Log.d(TAG,"${it.body()}")
+            val albumList = it.body()
+
+            Log.d("My id","$albumList" +
+                    "")
+        })
+
+        vm.getAlbum(4)
+        vm.mutableLiveDataAlbum.observe(viewLifecycleOwner, Observer {
+            val albumTitle = it.body()
+            binding.name.text = albumTitle.toString()
         })
         return binding.root
     }

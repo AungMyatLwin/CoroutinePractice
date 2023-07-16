@@ -22,6 +22,10 @@ class MyViewModel(application: Application):AndroidViewModel(application) {
     val mutableLiveDataResponse:MutableLiveData<Response<Album>> = MutableLiveData<Response<Album>>()
     private val _livedataResponse: LiveData<Response<Album>> = mutableLiveDataResponse
 
+    var mutableLiveDataAlbum: MutableLiveData<Response<Album>> = MutableLiveData()
+    val liveDataAlbum:LiveData<Response<Album>> = mutableLiveDataAlbum
+
+
     fun getAllUsers() {
         viewModelScope.launch(Dispatchers.IO) {
             val result = async{
@@ -42,5 +46,16 @@ class MyViewModel(application: Application):AndroidViewModel(application) {
             }
             mutableLiveDataResponse.postValue(test.await())
         }
+    }
+
+    fun getAlbum(id:Int):MutableLiveData<Response<Album>>{
+        viewModelScope.launch(Dispatchers.IO) {
+            val asyncResponse = async {
+                repository.getAlbumTitle(id)
+            }
+            val resAwait = asyncResponse.await()
+            mutableLiveDataAlbum.postValue(resAwait)
+        }
+        return mutableLiveDataAlbum
     }
 }

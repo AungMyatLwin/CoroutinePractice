@@ -25,4 +25,8 @@ class Repository(application: Application) {
     suspend fun getData(): Response<Album> {
         return response.getAlbums()
     }
+
+    suspend fun getAlbumTitle(id:Int):Response<Album>{
+        return response.getQueryAlbum(id)
+    }
 }

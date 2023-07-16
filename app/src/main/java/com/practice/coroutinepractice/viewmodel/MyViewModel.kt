@@ -20,8 +20,10 @@ class MyViewModel(application: Application):AndroidViewModel(application) {
 
     fun getAllUsers() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = repository.getAllUsers()
-            _userList.postValue(result)
+            val result = async{
+                repository.getAllUsers()
+            }
+            _userList.postValue(result.await())
         }
     }
 
